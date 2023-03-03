@@ -4,7 +4,7 @@ In this homework, you will be implementing a few popular computer vision models,
 
 You will be using a medium-sized repository which mimics that of a standard codebase which you might find for modern projects. 
 Don't be intimidated!
-We will walk you throw all of the parts of it, and hopefully after this homework you will be more confident working with codebases like this. We believe this is a realistic representation of what you may do in the future, and we hope you will find it useful.
+We will walk you through all of the parts of it, and hopefully after this homework you will be more confident working with codebases like this. We believe this is a realistic representation of what you may do in the future, and we hope you will find it useful.
 
 We would recommend you first set up the repository ASAP on honeydew and try running it out of the box to see how it trains, and only afterwards focus on understanding all parts of the code. 
 For your benefit, this codebase works out of the box, and you should be able to train a model on CIFAR-10 with no changes. Throughout the assignment, you will need to make some changes to `models/alexnet.py` and `models/resnet.py`, for which you will find the provided implementations of other models in `models/` to be helpful.
@@ -29,7 +29,7 @@ This should begin a download and training of a LeNet(ish) model on CIFAR-10. You
 
 ## Overview of Project Structure
 
-The project is organized largely as follows:
+The project is organized roughly as follows:
 
 ```bash
 configs/            # contains all of the configs for the project
