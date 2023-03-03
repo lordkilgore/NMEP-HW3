@@ -18,7 +18,7 @@ Best of luck, and we hope you enjoy it!
 To get started, you will need to clone the repository and install the dependencies, preferably in a conda environment. Standard instructions are provided below.
 
 ```bash
-git clone https://github.com/mlberkeley/sp23-nmep-hw1.git
+git clone git@github.com:mlberkeley/sp23-nmep-hw1.git
 cd sp23-nmep-hw1
 conda env create -f env.yml
 conda activate vision-zoo
