@@ -1,4 +1,4 @@
-BASE: ['resnet18_base']
+BASE: ['resnet18_base.yaml']
 DATA:
   BATCH_SIZE: 32
   DATASET: "medium_imagenet"
