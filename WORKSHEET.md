@@ -253,7 +253,7 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 ## 6.0 Implement and train ResNet18
 
-In `models/models.py`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
+In `models/*`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
 
 `YOUR ANSWER HERE`
 
