@@ -1,4 +1,4 @@
-# NMEP Homework 1: Computer Vision Model Zhu
+# Fall 2024 NMEP Homework 2: Computer Vision Model Zhu
 
 In this homework, you will be implementing a few popular computer vision models, and training them on both CIFAR-10 and on a custom dataset we created. You will be using PyTorch for this homework.
 
@@ -18,8 +18,8 @@ Best of luck, and we hope you enjoy it!
 To get started, you will need to clone the repository and install the dependencies, preferably in a conda environment. Standard instructions are provided below.
 
 ```bash
-git clone git@github.com:mlberkeley/sp23-nmep-hw1.git
-cd sp23-nmep-hw1
+git clone git@github.com:mlberkeley/fa24-nmep-hw2.git
+cd fa24-nmep-hw2
 conda env create -f env.yml
 conda activate vision-zoo
 CUDA_VISIBLE_DEVICES=0 python main.py --cfg=configs/lenet_base.yaml
