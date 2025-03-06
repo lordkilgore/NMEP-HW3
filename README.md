@@ -1,4 +1,4 @@
-# Fall 2024 NMEP Homework 2: Computer Vision Model Zhu
+# NMEP Homework 3: Computer Vision Model Zhu
 
 In this homework, you will be implementing a few popular computer vision models, and training them on both CIFAR-10 and on a custom dataset we created. You will be using PyTorch for this homework.
 
