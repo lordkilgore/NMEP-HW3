@@ -184,16 +184,16 @@ The following questions relate to `main.py`, and the configs in `configs/`.
 
 ## 3.0 What configs have we provided for you? What models and datasets do they train on?
 
-`YOUR ANSWER HERE`
+*The configs provided are for LeNet (on CIFAR) and ResNet (on CIFAR and MediumImageNet).*
 
 ## 3.1 Open `main.py` and go through `main()`. In bullet points, explain what the function does.
 
-`YOUR ANSWER HERE`
+*Explained on diagram*
 
 ## 3.2 Go through `validate()` and `evaluate()`. What do they do? How are they different? 
 > Could we have done better by reusing code? Yes. Yes we could have but we didn't... sorry...
 
-`YOUR ANSWER HERE`
+*Explained on diagram. Validation occurs during each epoch to serve as a checkpoint. Evaluation occurs after the training loop on the test set.*
 
 
 # Part 4: AlexNet
