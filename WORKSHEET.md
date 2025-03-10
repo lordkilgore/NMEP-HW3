@@ -44,7 +44,7 @@ Feel free to ask your NMEP friends if you don't know!
 
 Read through `README.md` and follow the steps to understand how the repo is structured.
 
-## 0.0 What are the `build.py` files? Why do we have them?**
+## 0.0 What are the `build.py` files? Why do we have them?
 
 `YOUR ANSWER HERE`
 
