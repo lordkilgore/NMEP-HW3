@@ -157,6 +157,9 @@ Visualize ~10 or so examples from the dataset. There's many ways to do it - you 
 
 Be sure to also get the class names. You might notice that we don't have them loaded anywhere in the repo - feel free to fix it or just hack it together for now, the class names are in a file in the same folder as the hdf5 dataset.
 
+See `.\data\data_vis.ipynb` for code.
+
+
 ![plt](image.png)
 
 
@@ -175,7 +178,12 @@ The following questions relate to `models/build.py` and `models/models.py`.
 
 ## How many layers does our implementation of LeNet have? How many parameters does it have? (hint: to count the number of parameters, you might want to run the code)
 
-*There are 7 layers (2 convolutions, 2 pooling, 3 classification).*
+*There are 7 layers (2 convolutions, 2 pooling, 3 classification). 99276 parameters... don't ask how we got this.*
+
+Ok here's how we got it.
+`sdfj = LeNet()`
+`print(sum([x.numel() for x in list(sdfj.parameters())]))`
+
 
 
 # Part 3: Training
