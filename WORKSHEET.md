@@ -9,16 +9,7 @@ This is the worksheet for Homework 1. Your deliverables for this homework are:
 - [ ] Github repo with all of your code! You need to either fork it or just copy the code over to your repo. A simple way of doing this is provided below. Include the link to your repo below. If you would like to make the repo private, please dm us and we'll send you the GitHub usernames to add as collaborators.
 
 `YOUR GITHUB REPO HERE (or notice that you DMed us to share a private repo)`
-
-## To move to your own repo:
-
-First follow `README.md` to clone the code. Additionally, create an empty repo on GitHub that you want to use for your code. Then run the following commands:
-
-```bash
-$ git remote rename origin staff # staff is now the provided repo
-$ git remote add origin <your repos remote url>
-$ git push -u origin main
-```
+https://github.com/lordkilgore/NMEP-HW3
 
 
 
@@ -28,16 +19,17 @@ Feel free to ask your NMEP friends if you don't know!
 
 ## -1.0 What is the difference between `torch.nn.Module` and `torch.nn.functional`?
 
-`YOUR ANSWER HERE`
+`torch.nn.Module` is used to create and design the architecture of a model and `torch.nn.functional` provides a variety of functions
+needed to do so.
 
 ## -1.1 What is the difference between a Dataset and a DataLoader?
 
-`YOUR ANSWER HERE`
+A dataset is the raw, bulk of data and a dataloader provides an iterable wrapper over it, allowing lazy batching along with 
+several other functionalities.
 
 ## -1.2 What does `@torch.no_grad()` above a function header do?
 
-`YOUR ANSWER HERE`
-
+The `@torch.no_grad()` header decorating a function prevents Pytorch from computing any gradients within that function. As a side effect, this also prevents the construction of a computational graph.
 
 
 # Part 0: Understanding the codebase
