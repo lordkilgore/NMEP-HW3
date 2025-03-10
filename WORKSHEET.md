@@ -54,6 +54,8 @@ Read through `README.md` and follow the steps to understand how the repo is stru
 
 ## 0.4 Create a diagram explaining the structure of `main.py` and the entire code repo.
 
+![alt text](image-1.png)
+
 ### main
 - Loads everything onto device.
 Initializes the logger. 
@@ -61,15 +63,15 @@ Loads optimizer, loss function, learning rate scheduler.
 
 - Initialize loss and accuracy through an initial call to validate.
 
-- **Training Loop**:
+- **Loop**:
     Call `train_one_epoch`.
-    Validate using `validate`
-    Save checkpoint if every so often
-    Compute training statistics
-    Update scheduler
-    Log statistics
+    Validate using `validate`.
+    Save checkpoint if every so often.
+    Compute training statistics.
+    Update scheduler.
+    Log statistics.
 
-- Output recorded data and evaluate on test set.
+- Output recorded data and call `evaluate` on the test set.
 
 ### train_one_epoch
 - Initializes metric loggers, sets model in training mode.
@@ -86,9 +88,6 @@ Loads optimizer, loss function, learning rate scheduler.
 - **Loop**:
     Compute model outputs, append to an output array.
 
-Be sure to include the 4 main functions in it (`main`, `train_one_epoch`, `validate`, `evaluate`) and how they interact with each other. Also explain where the other files are used. No need to dive too deep into any part of the code for now, the following parts will do deeper dives into each part of the code. For now, read the code just enough to understand how the pieces come together, not necessarily the specifics. You can use any tool to create the diagram (e.g. just explain it in nice markdown, draw it on paper and take a picture, use draw.io, excalidraw, etc.)
-
-`YOUR ANSWER HERE`
 
 
 
@@ -98,55 +97,59 @@ The following questions relate to `data/build.py` and `data/datasets.py`.
 
 ## 1.0 Builder/General
 
-### 1.0.0 What does `build_loader` do?
 
-`YOUR ANSWER HERE`
+### 1.0.0 What does `build_loader` do?
+*Constructs dataset splits and builds dataloaders specific to certain datasets. Returns split datasets and dataloaders.*
+
 
 ### 1.0.1 What functions do you need to implement for a PyTorch Datset? (hint there are 3)
 
-`YOUR ANSWER HERE`
+*The three functions you need for a PyTorch Dataset are `__getitem__`, `__len__`, and `__init__`.*
 
 ## 1.1 CIFAR10Dataset
 
 ### 1.1.0 Go through the constructor. What field actually contains the data? Do we need to download it ahead of time?
 
-`YOUR ANSWER HERE`
+*The `dataset` attribute contains the data, and the dataset it points to must be downloaded ahead of time.*
 
 ### 1.1.1 What is `self.train`? What is `self.transform`?
 
-`YOUR ANSWER HERE`
+*`self.train` is a boolean which specifies whether or not the data belongs to the training set. If it is true, a sequence of transformations are applied to it (data augmentation). `self.transform` calls the `_get_transforms` method, which first constructs a sequence of transforms, then composes it into a single transform, and then the result is bound to the `self.transform` attribute.*
 
 ### 1.1.2 What does `__getitem__` do? What is `index`?
 
-`YOUR ANSWER HERE`
+*Retrieves a single image, label pair, specified at `index` (assuming there is some natural order to the dataset), but only after applying `self.transform` to the image.*
 
 ### 1.1.3 What does `__len__` do?
 
-`YOUR ANSWER HERE`
+*Returns the size of the dataset.*
 
 ### 1.1.4 What does `self._get_transforms` do? Why is there an if statement?
 
-`YOUR ANSWER HERE`
+*As mentioned before, this method first constructs a sequence of transforms, then composes it into a single transform. The if statement is there to segregate the training set, which is artifically generated through data augmentation, and the validation and testing datasets (see `.\data\build.py`).*
 
 ### 1.1.5 What does `transforms.Normalize` do? What do the parameters mean? (hint: take a look here: https://pytorch.org/vision/main/generated/torchvision.transforms.Normalize.html)
 
-`YOUR ANSWER HERE`
+*It looks like the color channels are being standardized, i.e. each channel is demeaned and scaled appropriately so that the data is uniform about the origin.*
 
 ## 1.2 MediumImagenetHDF5Dataset
 
 ### 1.2.0 Go through the constructor. What field actually contains the data? Where is the data actually stored on honeydew? What other files are stored in that folder on honeydew? How large are they?
 
-`YOUR ANSWER HERE`
+*The field that contains the data is `self.file`. The data is stored on a `.hdf5` file in `//honey/nmep/`. The following files are stored in this directory:*
+- `database.db` (0.946 GB)
+- `downloader.py` (2150 bytes)
+- `medium-imagenet-96.hdf5` (20.99 GB)
+- `medium-imagenet.tgz` (126.6 GB)
+- `test_labels_kaggle.csv` (0.85845 MB)
 
 > *Some background*: HDF5 is a file format that stores data in a hierarchical structure. It is similar to a python dictionary. The files are binary and are generally really efficient to use. Additionally, `h5py.File()` does not actually read the entire file contents into memory. Instead, it only reads the data when you access it (as in `__getitem__`). You can learn more about [hdf5 here](https://portal.hdfgroup.org/display/HDF5/HDF5) and [h5py here](https://www.h5py.org/).
 
 ### 1.2.1 How is `_get_transforms` different from the one in CIFAR10Dataset?
-
-`YOUR ANSWER HERE`
+*Similarly, a transform is being built, however the component transformations are different. Here, the color channels are being scaled down to the interval [0, 1]. Then, it looks like the same transforms in the CIFAR dataset class are applied in reverse: first the normalization occurs, then the resizing, followed lastly by the horizontal flip and color jittering.*
 
 ### 1.2.2 How is `__getitem__` different from the one in CIFAR10Dataset? How many data splits do we have now? Is it different from CIFAR10? Do we have labels/annotations for the test set?
-
-`YOUR ANSWER HERE`
+*In this method, like in CIFAR, we are retrieving an image and applying a transform to it from the dataset. However, here, there is a distinction between the labels in training/validation data and testing data. If the data is part of a test split, it is given the label `-1` (i.e. no label is given to test datapoints), otherwise it is given the corresponding ground truth label in the dataset. In this case, we have 3 splits, which is different than in CIFAR, which only has 2 (`train` or `not train`).*
 
 ### 1.2.3 Visualizing the dataset
 
@@ -154,7 +157,8 @@ Visualize ~10 or so examples from the dataset. There's many ways to do it - you 
 
 Be sure to also get the class names. You might notice that we don't have them loaded anywhere in the repo - feel free to fix it or just hack it together for now, the class names are in a file in the same folder as the hdf5 dataset.
 
-`YOUR ANSWER HERE`
+![plt](image.png)
+
 
 
 # Part 2: Models
