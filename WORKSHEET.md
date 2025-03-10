@@ -167,16 +167,15 @@ The following questions relate to `models/build.py` and `models/models.py`.
 
 ## What models are implemented for you?
 
-`YOUR ANSWER HERE`
+*LeNet and ResNet are implemented for us.*
 
 ## What do PyTorch models inherit from? What functions do we need to implement for a PyTorch Model? (hint there are 2)
 
-`YOUR ANSWER HERE`
+*The models inherit from `nn.Module`. The functions we need to implement are `__init__` and forward.*
 
 ## How many layers does our implementation of LeNet have? How many parameters does it have? (hint: to count the number of parameters, you might want to run the code)
 
-`YOUR ANSWER HERE`
-
+*There are 7 layers (2 convolutions, 2 pooling, 3 classification).*
 
 
 # Part 3: Training
