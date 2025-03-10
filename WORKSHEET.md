@@ -257,7 +257,7 @@ In `models/*`, we provided some skelly/guiding comments to implement ResNet. Imp
 
 `YOUR ANSWER HERE`
 
-## 6.1 Visualize examples
+## 6.1 (optional) Visualize examples
 
 Visualize a couple of the predictions on the validation set (20 or so). Be sure to include the ground truth label and the predicted label. You can use `wandb.log()` to log images or also just save them to disc any way you think is easy.
 
@@ -272,7 +272,7 @@ We called it MediumImageNet. It contains 1.5M training images, and 190k images f
 
 The dataset is downloaded onto honeydew at `/data/medium-imagenet`. Feel free to play around with the files and learn more about the dataset.
 
-For the kaggle competition, you need to train on the 1.5M training images and submit predictions on the 190k test images. You may validate on the validation set but you may not use is as a training set to get better accuracy (aka don't backprop on it). The test set labels are not provided. You can submit up to 10 times a day (hint: that's a lot). The competition ends on __TBD__.
+For the kaggle competition, you need to train on the 1.5M training images and submit predictions on the 190k test images. You may validate on the validation set but you may not use is as a training set to get better accuracy (aka don't backprop on it). The test set labels are not provided. You can submit up to 10 times a day (hint: that's a lot).
 
 Your Kaggle scores should approximately match your validation scores. If they do not, something is wrong.
 
