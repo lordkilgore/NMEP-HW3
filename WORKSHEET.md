@@ -19,17 +19,17 @@ Feel free to ask your NMEP friends if you don't know!
 
 ## -1.0 What is the difference between `torch.nn.Module` and `torch.nn.functional`?
 
-`torch.nn.Module` is used to create and design the architecture of a model and `torch.nn.functional` provides a variety of functions
-needed to do so.
+*`torch.nn.Module` is used to create and design the architecture of a model and `torch.nn.functional` provides a variety of functions
+needed to do so.*
 
 ## -1.1 What is the difference between a Dataset and a DataLoader?
 
-A dataset is the raw, bulk of data and a dataloader provides an iterable wrapper over it, allowing lazy batching along with 
-several other functionalities.
+*A dataset is the raw, bulk of data and a dataloader provides an iterable wrapper over it, allowing lazy batching along with 
+several other functionalities.*
 
 ## -1.2 What does `@torch.no_grad()` above a function header do?
 
-The `@torch.no_grad()` header decorating a function prevents Pytorch from computing any gradients within that function. As a side effect, this also prevents the construction of a computational graph.
+*The `@torch.no_grad()` header decorating a function prevents Pytorch from computing any gradients within that function. As a side effect, this also prevents the construction of a computational graph.*
 
 
 # Part 0: Understanding the codebase
@@ -38,21 +38,53 @@ Read through `README.md` and follow the steps to understand how the repo is stru
 
 ## 0.0 What are the `build.py` files? Why do we have them?
 
-`YOUR ANSWER HERE`
+*Each `build.py` file builds a model and data loaders using predefined config files in the `./configs` folder. These allow us to write code without worrying about dependency conflicts.*
 
 ## 0.1 Where would you define a new model?
 
-`YOUR ANSWER HERE`
+*A new model is defined in the `./models` folder.*
 
 ## 0.2 How would you add support for a new dataset? What files would you need to change?
 
-`YOUR ANSWER HERE`
+*You can add support for a new dataset by creating a `Dataset` subclass specific to the desired dataset in `./data/datasets.py`. This would additionally require you to specify another condition for which you would instantiate the datasets/dataloaders in `./data/build.py` (i.e. create train/val/test datasets and their associated dataloaders).*
 
 ## 0.3 Where is the actual training code?
 
-`YOUR ANSWER HERE`
+*The actual training code is in `./main.py`*
 
 ## 0.4 Create a diagram explaining the structure of `main.py` and the entire code repo.
+
+### main
+- Loads everything onto device.
+Initializes the logger. 
+Loads optimizer, loss function, learning rate scheduler.
+
+- Initialize loss and accuracy through an initial call to validate.
+
+- **Training Loop**:
+    Call `train_one_epoch`.
+    Validate using `validate`
+    Save checkpoint if every so often
+    Compute training statistics
+    Update scheduler
+    Log statistics
+
+- Output recorded data and evaluate on test set.
+
+### train_one_epoch
+- Initializes metric loggers, sets model in training mode.
+- **Loop**:
+    Compute model output, then compute loss, backpropogate, optimize, print metrics.
+
+### validate
+- Initializes metric loggers, sets model in evaluation mode.
+- **Loop**: 
+    Compute model output, then compute loss, print metrics.
+
+### evaluate
+- Set model in evaluation mode.
+- **Loop**:
+    Compute model outputs, append to an output array.
 
 Be sure to include the 4 main functions in it (`main`, `train_one_epoch`, `validate`, `evaluate`) and how they interact with each other. Also explain where the other files are used. No need to dive too deep into any part of the code for now, the following parts will do deeper dives into each part of the code. For now, read the code just enough to understand how the pieces come together, not necessarily the specifics. You can use any tool to create the diagram (e.g. just explain it in nice markdown, draw it on paper and take a picture, use draw.io, excalidraw, etc.)
 
