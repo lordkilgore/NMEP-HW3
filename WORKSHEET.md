@@ -64,29 +64,29 @@ Loads optimizer, loss function, learning rate scheduler.
 - Initialize loss and accuracy through an initial call to validate.
 
 - **Loop**:
-    Call `train_one_epoch`.
-    Validate using `validate`.
-    Save checkpoint if every so often.
-    Compute training statistics.
-    Update scheduler.
-    Log statistics.
+  Call `train_one_epoch`.
+  Validate using `validate`.
+  Save checkpoint if every so often.
+  Compute training statistics.
+  Update scheduler.
+  Log statistics.
 
 - Output recorded data and call `evaluate` on the test set.
 
 ### train_one_epoch
 - Initializes metric loggers, sets model in training mode.
 - **Loop**:
-    Compute model output, then compute loss, backpropogate, optimize, print metrics.
+  Compute model output, then compute loss, backpropogate, optimize, print metrics.
 
 ### validate
 - Initializes metric loggers, sets model in evaluation mode.
 - **Loop**: 
-    Compute model output, then compute loss, print metrics.
+  Compute model output, then compute loss, print metrics.
 
 ### evaluate
 - Set model in evaluation mode.
 - **Loop**:
-    Compute model outputs, append to an output array.
+  Compute model outputs, append to an output array.
 
 
 
@@ -232,7 +232,7 @@ Linear with num_classes output units
 ## 4.1 How many parameters does AlexNet have? How does it compare to LeNet? With the same batch size, how much memory do LeNet and AlexNet take up while training? 
 > (hint: use `gpuststat`)
 
-`YOUR ANSWER HERE`
+*AlexNet has 57.8 million parameters, which is ALOT more than LeNet (99280 parameters). With the same batch size, LeNet takes up 280MB and AlexNet takes up 2454MB.*
 
 ## 4.2 Train AlexNet on CIFAR10. What accuracy do you get?
 
@@ -241,7 +241,70 @@ Report training and validation accuracy on AlexNet and LeNet. Report hyperparame
 > You can just copy the config file, don't need to write it all out again.
 > Also no need to tune the models much, you'll do it in the next part.
 
-`YOUR ANSWER HERE`
+**Alexnet**  
+`AUG:  
+COLOR_JITTER: 0.4  
+DATA:  
+BATCH_SIZE: 256  
+DATASET: "cifar10"  
+IMG_SIZE: 32  
+NUM_WORKERS: 32  
+PIN_MEMORY: True  
+MODEL:  
+NAME: alexnet  
+NUM_CLASSES: 200  
+DROP_RATE: 0.0  
+TRAIN:  
+EPOCHS: 50  
+WARMUP_EPOCHS: 10  
+LR: 3e-4  
+MIN_LR: 3e-5  
+WARMUP_LR: 3e-5  
+LR_SCHEDULER:  
+  NAME: "cosine"  
+OPTIMIZER:  
+  NAME: "adamw"  
+  EPS: 1e-8  
+  BETAS: (0.9, 0.999)  
+  MOMENTUM: 0.9  
+OUTPUT: "output/alexnet_cifar"  
+SAVE_FREQ: 5  
+PRINT_FREQ: 99999  
+PRINT_FREQ: 99999`  
+*Train Accuracy: 99.8%*. *Validation Accuracy: 84.1%*
+
+**LeNet**  
+`AUG:
+COLOR_JITTER: 0.4
+DATA:
+BATCH_SIZE: 256
+DATASET: "cifar10"
+IMG_SIZE: 32
+NUM_WORKERS: 32
+PIN_MEMORY: True
+MODEL:
+NAME: lenet
+NUM_CLASSES: 200
+DROP_RATE: 0.0
+TRAIN:
+EPOCHS: 50
+WARMUP_EPOCHS: 10
+LR: 3e-4
+MIN_LR: 3e-5
+WARMUP_LR: 3e-5
+LR_SCHEDULER:
+  NAME: "cosine"
+OPTIMIZER:
+  NAME: "adamw"
+  EPS: 1e-8
+  BETAS: (0.9, 0.999)
+  MOMENTUM: 0.9
+OUTPUT: "output/lenet_cifar"
+SAVE_FREQ: 5
+PRINT_FREQ: 99999
+PRINT_FREQ: 99999`  
+*Train Accuracy: 37.2%. Validation Accuracy: 38.6%.*
+
 
 
 

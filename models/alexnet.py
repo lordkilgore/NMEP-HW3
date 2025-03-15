@@ -8,7 +8,7 @@ class AlexNet(nn.Module):
     def __init__(self, num_classes: int = 200) -> None:
         super().__init__()
         self.features = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
+            nn.Conv2d(3, 64, kernel_size=5, stride=1, padding=2),
             nn.MaxPool2d(3, 2),
             nn.ReLU(),
 
@@ -16,13 +16,13 @@ class AlexNet(nn.Module):
             nn.MaxPool2d(3, 2),
             nn.ReLU(),
 
-            nn.Conv2d(192, 384, 3, padding=1),
+            nn.Conv2d(192, 384, kernel_size=3, padding=1),
             nn.ReLU(),
 
-            nn.Conv2d(384, 256, 3, padding=1),
+            nn.Conv2d(384, 256, kernel_size=3, padding=1),
             nn.ReLU(),
 
-            nn.Conv2d(256, 256, 3, padding=1),
+            nn.Conv2d(256, 256, kernel_size=3, padding=1),
             nn.ReLU(),
 
             nn.MaxPool2d(3, 2),
@@ -31,7 +31,7 @@ class AlexNet(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Dropout(0.5),
-            nn.Linear(36, 4096),
+            nn.Linear(9216, 4096),
             nn.ReLU(),
 
             nn.Dropout(0.5),
