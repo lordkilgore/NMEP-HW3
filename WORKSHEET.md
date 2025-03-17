@@ -363,7 +363,33 @@ me, I have no idea what is causing this.*
 
 ## 5.5 Try different data augmentations. Take a look [here](https://pytorch.org/vision/stable/transforms.html) for torchvision augmentations. Try at least 2 new augmentation schemes. Record loss/accuracy curves and best accuracies on validation/train set.
 
-`YOUR ANSWER HERE`
+**Scheme 1**
+```
+transform = [
+                transforms.GaussianBlur(1),
+                transforms.ElasticTransform(),
+                transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+                transforms.Resize([self.img_size] * 2),
+            ]
+```
+
+**Scheme 2**
+```
+transform = [
+                transforms.RandomHorizontalFlip(),
+                transforms.ElasticTransform(),
+                transforms.ColorJitter(brightness=0.4, contrast=0.7, saturation=0.4),
+                transforms.GaussianBlur(5),
+                transforms.ToTensor(),
+                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+                transforms.Resize([self.img_size] * 2),
+            ]
+```
+
+![alt text](images/scheme_plots.png)
 
 ## 5.6 (optional) Play around with more hyperparameters. I recommend playing around with the optimizer (Adam, SGD, RMSProp, etc), learning rate scheduler (constant, StepLR, ReduceLROnPlateau, etc), weight decay, dropout, activation functions (ReLU, Leaky ReLU, GELU, Swish, etc), etc.
 
