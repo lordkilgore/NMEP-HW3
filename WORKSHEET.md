@@ -333,7 +333,7 @@ PRINT_FREQ: 99999`
 
 **64:**  13:15
 **128:** 14:22
-**256:** 12:54
+**256:** 8:52 (Vanilla)
 **512:** 11:44
 **1024:** 07:37 
 
@@ -403,7 +403,11 @@ transform = [
 
 In `models/*`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
 
-`YOUR ANSWER HERE`
+Training Time: 31m56s  
+Hyperparameters: [see config]  
+Best Validation Accuracy:  86.75%  
+
+![alt text](images/alex_vs_res.png)
 
 ## 6.1 (optional) Visualize examples
 
