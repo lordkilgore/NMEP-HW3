@@ -73,7 +73,7 @@ def main(config):
 
     # --- Part 5 --- #
     run = wandb.init(
-        name=config.MODEL.NAME,
+        name=config.MODEL.NAME + " Throughput (batch size): 4",
         config={
             "learning_rate" : config.TRAIN.LR,
             "epochs" : config.TRAIN.EPOCHS

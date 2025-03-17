@@ -342,7 +342,24 @@ PRINT_FREQ: 99999`
 ## 5.4 As a followup to the previous question, we're going to explore the effect of batch size on _throughput_, which is the number of images/sec that our model can process. You can find this by taking the batch size and dividing by the time per epoch. Plot the throughput for batch sizes of powers of 2, i.e. 1, 2, 4, ..., until you reach CUDA OOM. What is the largest batch size you can support? What trends do you observe, and why might this be the case?
 You only need to observe the training for ~ 5 epochs to average out the noise in training times; don't train to completion for this question! We're only asking about the time taken. If you're curious for a more in-depth explanation, feel free to read [this intro](https://horace.io/brrr_intro.html). 
 
-`YOUR ANSWER HERE`
+1    : 690s   -> 1.4e-3 images/sec  
+2    : 340s   -> 5.8e-3 images/sec  
+4    : 171s   -> 23.3e-3 images/sec  
+8    : 152.5s -> 52.4e-3 images/sec  
+16   : 85s    -> 188.2e-3 images/sec  
+32   : 34.5s  -> 0.9275 images/sec  
+64   : 23s    -> 2.7826 images/sec  
+128  : 15s    -> 8.5333 images/sec  
+256  : 13.8s  -> 18.5507 images/sec  
+512  : 6.2s   -> 82.5804 images/sec  
+1024 : 6.4s   -> 160.0000 images/sec  
+2048 : 8s     -> 256.0000 images/sec  
+4096 : 9s     -> 455.1111 images/sec  
+
+*OOM @ 8192 Batch Size. It appears that the time for each
+epoch gets faster up until a point (~512 batch size), when
+it suddenly becomes slower again. This is really weird to
+me, I have no idea what is causing this.*
 
 ## 5.5 Try different data augmentations. Take a look [here](https://pytorch.org/vision/stable/transforms.html) for torchvision augmentations. Try at least 2 new augmentation schemes. Record loss/accuracy curves and best accuracies on validation/train set.
 
@@ -350,7 +367,7 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 ## 5.6 (optional) Play around with more hyperparameters. I recommend playing around with the optimizer (Adam, SGD, RMSProp, etc), learning rate scheduler (constant, StepLR, ReduceLROnPlateau, etc), weight decay, dropout, activation functions (ReLU, Leaky ReLU, GELU, Swish, etc), etc.
 
-`YOUR ANSWER HERE`
+
 
 
 
