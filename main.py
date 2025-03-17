@@ -7,6 +7,7 @@ import time
 
 import numpy as np
 import torch
+import wandb
 import torch.nn as nn
 from timm.utils import AverageMeter, accuracy
 from torch.optim.lr_scheduler import CosineAnnealingLR
@@ -70,6 +71,16 @@ def main(config):
     logger.info('number of params: {} M'.format(n_parameters / 1e6))
     logger.info(f'flops: {n_flops/1e6} MFLOPS')
 
+    # --- Part 5 --- #
+    run = wandb.init(
+        name=config.MODEL.NAME,
+        config={
+            "learning_rate" : config.TRAIN.LR,
+            "epochs" : config.TRAIN.EPOCHS
+        }
+    )
+    # -------------- #
+
     # Keep it simple with basic epoch scheduler
     optimizer = build_optimizer(config, model)
     criterion = torch.nn.CrossEntropyLoss()
@@ -87,6 +98,7 @@ def main(config):
     logger.info("Start training")
     start_time = time.time()
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
+        
         train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
         logger.info(f" * Train Acc {train_acc1:.3f} Train Loss {train_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_train)} train images: {train_acc1:.1f}%")
@@ -98,6 +110,16 @@ def main(config):
 
         if epoch % config.SAVE_FREQ == 0 or epoch == (config.TRAIN.EPOCHS - 1):
             save_checkpoint(config, epoch, model, max_accuracy, optimizer, lr_scheduler, logger)
+
+        # --- Part 5 --- #
+        run.log({
+            "train/accuracy" : train_acc1,
+            "train/loss" : train_loss,
+            "val/accuracy" : val_acc1,
+            "val/loss" : val_loss
+        })
+
+        # -------------- #
 
         max_accuracy = max(max_accuracy, val_acc1)
         logger.info(f"Max accuracy: {max_accuracy:.2f}%\n")
@@ -118,6 +140,7 @@ def main(config):
     logger.info("Start testing")
     preds = evaluate(config, data_loader_test, model)
     np.save(os.path.join(config.OUTPUT, "preds.npy"), preds)
+    run.log_code()
     # TODO save predictions to csv in kaggle format
 
 
