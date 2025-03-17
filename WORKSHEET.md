@@ -54,7 +54,7 @@ Read through `README.md` and follow the steps to understand how the repo is stru
 
 ## 0.4 Create a diagram explaining the structure of `main.py` and the entire code repo.
 
-![alt text](image-1.png)
+![alt text](images/diagram.png)
 
 ### main
 - Loads everything onto device.
@@ -160,7 +160,7 @@ Be sure to also get the class names. You might notice that we don't have them lo
 See `.\data\data_vis.ipynb` for code.
 
 
-![plt](image.png)
+![plt](images/data_visualization.png)
 
 
 
@@ -322,7 +322,7 @@ PRINT_FREQ: 99999`
 
 ## 5.1 Plot the training and validation accuracy and loss curves for AlexNet and LeNet. Attach the plot and any observations you have below.
 
-![alt text](image-2.png)
+![alt text](images/alexnet_metrics.png)
 *AlexNet is goated.*
 
 ## 5.2 For just AlexNet, vary the learning rate by factors of 3ish or 10 (ie if it's 3e-4 also try 1e-4, 1e-3, 3e-3, etc) and plot all the loss plots on the same graph. What do you observe? What is the best learning rate? Try at least 4 different learning rates.
@@ -331,7 +331,13 @@ PRINT_FREQ: 99999`
 
 ## 5.3 Do the same with batch size, keeping learning rate and everything else fixed. Ideally the batch size should be a power of 2, but try some odd batch sizes as well. What do you observe? Record training times and loss/accuracy plots for each batch size (should be easy with W&B). Try at least 4 different batch sizes.
 
-`YOUR ANSWER HERE`
+**64:**  13:15
+**128:** 14:22
+**256:** 12:54
+**512:** 11:44
+**1024:** 07:37 
+
+![alt text](images/batch_plots.png)
 
 ## 5.4 As a followup to the previous question, we're going to explore the effect of batch size on _throughput_, which is the number of images/sec that our model can process. You can find this by taking the batch size and dividing by the time per epoch. Plot the throughput for batch sizes of powers of 2, i.e. 1, 2, 4, ..., until you reach CUDA OOM. What is the largest batch size you can support? What trends do you observe, and why might this be the case?
 You only need to observe the training for ~ 5 epochs to average out the noise in training times; don't train to completion for this question! We're only asking about the time taken. If you're curious for a more in-depth explanation, feel free to read [this intro](https://horace.io/brrr_intro.html). 
