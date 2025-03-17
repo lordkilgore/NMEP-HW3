@@ -118,7 +118,6 @@ def main(config):
             "val/accuracy" : val_acc1,
             "val/loss" : val_loss
         })
-
         # -------------- #
 
         max_accuracy = max(max_accuracy, val_acc1)
