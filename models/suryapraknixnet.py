@@ -69,7 +69,7 @@ class SuryaPrakNixNet(nn.Module):
         )
 
         self.classifer = nn.Sequential(
-            nn.Linear(1024, 1024),
+            nn.Linear(9216, 1024),
             nn.ReLU(),
             nn.Linear(1024, num_classes)
         )
