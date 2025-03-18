@@ -57,7 +57,7 @@ class MediumImagenetHDF5Dataset(Dataset):
         self,
         img_size,
         split: str = "train",
-        filepath: str = "/data/medium-imagenet/medium-imagenet-nmep-96.hdf5",
+        filepath: str = "/honey/nmep/medium-imagenet-96.hdf5",
         augment: bool = True,
     ):
         assert split in ["train", "val", "test"]
@@ -68,17 +68,17 @@ class MediumImagenetHDF5Dataset(Dataset):
         self.file = h5py.File(filepath, "r")
 
     def __getitem__(self, index):
-        image = self.file[f"images-{self.split}"][index]
+        image = self.file[f"/images-{self.split}"][index]
         if self.split != "test":
-            label = self.file[f"labels-{self.split}"][index]
+            label = self.file[f"/labels-{self.split}"][index]
         else:
             label = -1
+
         image = self.transform(image)
-        label = torch.tensor(label, dtype=torch.long)
         return image, label
 
     def __len__(self):
-        return len(self.file[f"images-{self.split}"])
+        return len(self.file[f"/images-{self.split}"])
 
     def _get_transforms(self):
         transform = []
@@ -86,6 +86,7 @@ class MediumImagenetHDF5Dataset(Dataset):
         normalization = torch.Tensor([[0.485, 0.456, 0.406], [0.229, 0.224, 0.225]])
         transform.append(transforms.Normalize(normalization[0], normalization[1]))
         transform.append(transforms.Resize([self.input_size] * 2))
+
         if self.split == "train" and self.augment:
             transform.extend(
                 [

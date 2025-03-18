@@ -1,6 +1,7 @@
 from .lenet import LeNet
 from .resnet import ResNet18
 from .alexnet import AlexNet
+from .suryapraknixnet import SuryaPrakNixNet
 
 
 def build_model(config):
@@ -14,6 +15,8 @@ def build_model(config):
         model = ResNet18(num_classes=config.MODEL.NUM_CLASSES)
     elif model_type == 'alexnet':
         model = AlexNet(num_classes=config.MODEL.NUM_CLASSES)
+    elif model_type == 'suryapraknixnet':
+        model = SuryaPrakNixNet(num_classes=config.MODEL.NUM_CLASSES)
     # elif model_type == 'resnet34':
     #     model = ResNet34(num_classes=config.MODEL.NUM_CLASSES)
     # elif model_type == 'resnet50':

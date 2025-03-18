@@ -6,6 +6,7 @@ import shutil
 import time
 
 import numpy as np
+import csv
 import torch
 import wandb
 import torch.nn as nn
@@ -140,7 +141,14 @@ def main(config):
     preds = evaluate(config, data_loader_test, model)
     np.save(os.path.join(config.OUTPUT, "preds.npy"), preds)
     run.log_code()
-    # TODO save predictions to csv in kaggle format
+    
+    # --- Part 6 --- #
+    with open(os.path.join(config.OUTPUT, "submission.csv"), 'w') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Id", "Category"])
+        for i, category in enumerate(preds):
+            writer.writerow([i, category[0]])
+    # -------------- #
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
@@ -169,6 +177,7 @@ def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
         acc1_meter.update(acc1.item(), targets.size(0))
         batch_time.update(time.time() - end)
         end = time.time()
+
 
     lr = optimizer.param_groups[0]["lr"]
     memory_used = torch.cuda.max_memory_allocated() / (1024.0 * 1024.0)
