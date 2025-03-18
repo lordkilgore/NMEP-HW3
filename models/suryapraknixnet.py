@@ -65,12 +65,11 @@ class SuryaPrakNixNet(nn.Module):
             self.make_block(out_channels=128, stride=2, rep=2),
             self.make_block(out_channels=512, stride=2, rep=2),
             self.make_block(out_channels=1024, stride=2, rep=2),
-            nn.AvgPool2d(4),
-            nn.ConvTranspose2d(in_channels=1024, out_channels=512, kernel_size=1)
+            nn.AvgPool2d(4)
         )
 
         self.classifer = nn.Sequential(
-            nn.Linear(512, num_classes),
+            nn.Linear(1024, 1024),
             nn.ReLU(),
             nn.Linear(1024, num_classes)
         )
