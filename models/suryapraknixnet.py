@@ -35,7 +35,7 @@ class ResNetBlock(nn.Module):
 
         for layer in first_segment:
             x = layer(x)
-        x = nn.functional.relu(x)
+        x = nn.functional.gelu(x)
 
         for layer in second_segment:
             x = layer(x)
@@ -43,7 +43,7 @@ class ResNetBlock(nn.Module):
         for layer in shortcut:
             idd = layer(idd)
         
-        x = nn.functional.relu(x + idd)
+        x = nn.functional.gelu(x + idd)
 
         return x
 
@@ -58,18 +58,23 @@ class SuryaPrakNixNet(nn.Module):
         super(SuryaPrakNixNet, self).__init__()
         self.in_channels = 64   
         self.features = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.Conv2d(3, 32, kernel_size=3, stride=2, padding=1, bias=False),  
+            nn.BatchNorm2d(32),
+            nn.GELU(),
+            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1, bias=False),  
             nn.BatchNorm2d(64),
-            nn.ReLU(),
+            nn.GELU(),
             self.make_block(out_channels=64, stride=1, rep=2),
             self.make_block(out_channels=128, stride=2, rep=2),
             self.make_block(out_channels=512, stride=2, rep=2),
+            self.make_block(out_channels=512, stride=2, rep=2),
             self.make_block(out_channels=1024, stride=2, rep=2),
-            nn.AvgPool2d(4)
+            self.make_block(out_channels=1024, stride=2, rep=2),
+            nn.AdaptiveAvgPool2d(1)
         )
 
         self.classifer = nn.Sequential(
-            nn.Linear(9216, 1024),
+            nn.Linear(1024, 1024),
             nn.ReLU(),
             nn.Linear(1024, num_classes)
         )
