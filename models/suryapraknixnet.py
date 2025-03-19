@@ -79,13 +79,12 @@ class SuryaPrakNixNet(nn.Module):
             nn.LayerNorm(1024),
             nn.GELU(),
             nn.Dropout(0.5),
-            nn.Linear(1024, 52),
+            nn.Linear(1024, 512),
             nn.LayerNorm(512),
             nn.GELU(),
             nn.Dropout(0.5),
             nn.Linear(512, num_classes)
         )
-        
         
 
     def make_block(self, out_channels, stride, rep):
