@@ -75,10 +75,7 @@ def main(config):
     # --- Part 5 --- #
     run = wandb.init(
         name=config.MODEL.NAME,
-        config={
-            "learning_rate" : config.TRAIN.LR,
-            "epochs" : config.TRAIN.EPOCHS
-        }
+        config=config
     )
     # -------------- #
 
@@ -98,6 +95,7 @@ def main(config):
 
     logger.info("Start training")
     start_time = time.time()
+    print(n_parameters)
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
         
         train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)

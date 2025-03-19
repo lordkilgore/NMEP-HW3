@@ -64,38 +64,40 @@ class SuryaPrakNixNet(nn.Module):
         super(SuryaPrakNixNet, self).__init__()
         self.in_channels = 64   
         self.features = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False),  
+            nn.Conv2d(3, 64, kernel_size=5, stride=2, padding=3, bias=False),  
             nn.BatchNorm2d(64),
             nn.GELU(),
-            self.make_block(out_channels=64, stride=1, rep=2),
-            self.make_block(out_channels=128, stride=2, rep=3),
+            self.make_block(out_channels=128, stride=1, rep=2),
+            self.make_block(out_channels=256, stride=2, rep=3),
             self.make_block(out_channels=512, stride=2, rep=4),
             self.make_block(out_channels=1024, stride=2, rep=6),
+            self.make_block(out_channels=2048, stride=2, rep=6),
             nn.AdaptiveAvgPool2d(1)
         )
 
-        self.classifer = nn.Sequential(
-            nn.Linear(1024, 1024),
+        self.classifier = nn.Sequential(
+            nn.Linear(2048, 2048),
+            nn.LayerNorm(2048),
+            nn.GELU(),
+            nn.Dropout(0.5),
+            nn.Linear(2048, 1024),
             nn.LayerNorm(1024),
             nn.GELU(),
             nn.Dropout(0.5),
-            nn.Linear(1024, 512),
-            nn.LayerNorm(512),
-            nn.GELU(),
-            nn.Dropout(0.5),
-            nn.Linear(512, num_classes)
+            nn.Linear(1024, num_classes)
         )
         
 
     def make_block(self, out_channels, stride, rep):
         layers = []
-        for stride in [stride, 1]:
-            layers.append(BRBlock(self.in_channels, out_channels, stride))
-            self.in_channels = out_channels
+        for _ in range(rep):
+            for stride in [stride, 1]:
+                layers.append(BRBlock(self.in_channels, out_channels, stride))
+                self.in_channels = out_channels
         return nn.Sequential(*layers)
 
     def forward(self, x):
         x = self.features(x)
         x = torch.flatten(x, 1)
-        x = self.classifer(x)
+        x = self.classifier(x)
         return x
