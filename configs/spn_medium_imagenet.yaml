@@ -1,6 +1,6 @@
 BASE: ['resnet18_base.yaml']
 DATA:
-  BATCH_SIZE: 128
+  BATCH_SIZE: 64
   DATASET: "medium_imagenet"
   IMG_SIZE: 96
   NUM_WORKERS: 32
@@ -9,7 +9,7 @@ MODEL:
   NUM_CLASSES: 200
   NAME: suryapraknixnet
 TRAIN:
-  EPOCHS: 10
+  EPOCHS: 50
   WARMUP_EPOCHS: 2
 OUTPUT: "output/suryapraknixnet_medium_imagenet"
 SAVE_FREQ: 1
