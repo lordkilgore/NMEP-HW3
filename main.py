@@ -75,7 +75,7 @@ def main(config):
     # --- Part 5 --- #
     run = wandb.init(
         name=config.MODEL.NAME,
-        config=config
+        config=config | {"PARAMETERS" : n_parameters}
     )
     # -------------- #
 
@@ -108,7 +108,7 @@ def main(config):
         logger.info(f"Accuracy of the network on the {len(dataset_val)} val images: {val_acc1:.1f}%")
 
         if epoch % config.SAVE_FREQ == 0 or epoch == (config.TRAIN.EPOCHS - 1):
-            save_checkpoint(config, epoch, model, max_accuracy, optimizer, lr_scheduler, logger)
+            save_checkpoint(config, epoch, model, max_accuracy, optimizer, lr_scheduler, logger, idx="v8")
 
         # --- Part 5 --- #
         run.log({

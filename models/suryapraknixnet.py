@@ -67,32 +67,30 @@ class SuryaPrakNixNet(nn.Module):
             nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False),  
             nn.BatchNorm2d(64),
             nn.GELU(),
+            self.make_block(out_channels=64, stride=1, rep=3),
+
+            self.make_block(out_channels=128, stride=2, rep=1),
             self.make_block(out_channels=128, stride=1, rep=3),
-            self.make_block(out_channels=256, stride=2, rep=3),
-            self.make_block(out_channels=512, stride=2, rep=4),
-            self.make_block(out_channels=1024, stride=2, rep=6),
-            self.make_block(out_channels=2048, stride=2, rep=6),
+
+            self.make_block(out_channels=256, stride=2, rep=1),
+            self.make_block(out_channels=256, stride=1, rep=5),
+            
+            self.make_block(out_channels=512, stride=2, rep=1),
+            self.make_block(out_channels=512, stride=1, rep=2),
+
+            self.make_block(out_channels=1024, stride=2, rep=1),
+            self.make_block(out_channels=1024, stride=1, rep=5),
+
+            self.make_block(out_channels=2048, stride=2, rep=1),
+            self.make_block(out_channels=2048, stride=1, rep=3),
             nn.AdaptiveAvgPool2d(1)
         )
 
-        self.classifier1 = nn.Sequential(
+        self.classifier = nn.Sequential(
             nn.Linear(2048, 1550),
             nn.LayerNorm(1550),
             nn.GELU(),
             nn.Dropout(0.5)
-        )
-
-        self.classifier2 = nn.Sequential(
-            nn.Linear(1550, 2048),
-            nn.LayerNorm(2048),
-            nn.GELU(),
-            nn.Dropout(0.5),
-            nn.Linear(2048, 1550),
-            nn.LayerNorm(1550)
-        )
-
-        self.classifier3 = nn.Sequential(
-            nn.Linear(1550, num_classes)
         )
         
 
@@ -107,11 +105,5 @@ class SuryaPrakNixNet(nn.Module):
     def forward(self, x):
         x = self.features(x)
         x = torch.flatten(x, 1)
-        x = self.classifier1(x)
-
-        idd = x.clone().detach()
-        x = self.classifier2(x)
-        x = nn.functional.gelu(x + idd)
-
-        x = self.classifier3(x)
+        x = self.classifier(x)
         return x
