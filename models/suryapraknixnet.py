@@ -87,8 +87,15 @@ class SuryaPrakNixNet(nn.Module):
         )
 
         self.classifier = nn.Sequential(
+            nn.Linear(2048, 2048),
+            nn.LayerNorm(2048),
+            nn.GELU(),
             nn.Dropout(0.5),
-            nn.Linear(2048, num_classes)
+            nn.Linear(2048, 1024),
+            nn.LayerNorm(1024),
+            nn.GELU(),
+            nn.Dropout(0.5),
+            nn.Linear(1024, num_classes)
         )
 
     def make_block(self, out_channels, stride, rep):
