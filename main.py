@@ -108,7 +108,7 @@ def main(config):
         logger.info(f"Accuracy of the network on the {len(dataset_val)} val images: {val_acc1:.1f}%")
 
         if epoch % config.SAVE_FREQ == 0 or epoch == (config.TRAIN.EPOCHS - 1):
-            save_checkpoint(config, epoch, model, max_accuracy, optimizer, lr_scheduler, logger, idx="v5_deeper")
+            save_checkpoint(config, epoch, model, max_accuracy, optimizer, lr_scheduler, logger, idx="v5")
 
         # --- Part 5 --- #
         run.log({
@@ -144,8 +144,10 @@ def main(config):
     with open(os.path.join(config.OUTPUT, "submission.csv"), 'w') as file:
         writer = csv.writer(file)
         writer.writerow(["Id", "Category"])
+
+        preds = preds.argmax(axis=1)
         for i, category in enumerate(preds):
-            writer.writerow([i, category[0]])
+            writer.writerow([i, category])
     # -------------- #
 
 

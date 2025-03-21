@@ -9,7 +9,7 @@ MODEL:
   NUM_CLASSES: 200
   NAME: suryapraknixnet
 TRAIN:
-  EPOCHS: 50
+  EPOCHS: 54
   WARMUP_EPOCHS: 2
 OUTPUT: "output/suryapraknixnet_medium_imagenet"
 SAVE_FREQ: 1
